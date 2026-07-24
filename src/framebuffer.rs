@@ -37,6 +37,10 @@ impl Framebuffer {
         self.show_grid = visible;
     }
 
+    pub fn set_grid_color(&mut self, color: Color) {
+        self.grid_color = color;
+    }
+
     pub fn render(
         &self,
         renderer: &mut RaylibDrawHandle,
@@ -72,33 +76,17 @@ impl Framebuffer {
                 let width = right - left;
                 let height = bottom - top;
 
-                renderer.draw_rectangle(
-                    left,
-                    top,
-                    width,
-                    height,
-                    color,
-                );
+                renderer.draw_rectangle( left, top, width, height, color);
             }
         }
 
         if self.show_grid {
-            self.draw_grid(
-                renderer,
-                grid,
-                screen_width,
-                screen_height,
-            );
+            self.draw_grid( renderer, grid, screen_width, screen_height);
         }
     }
 
-    fn draw_grid(
-        &self,
-        renderer: &mut RaylibDrawHandle,
-        grid: &Grid,
-        screen_width: i32,
-        screen_height: i32,
-    ) {
+    fn draw_grid( &self, renderer: &mut RaylibDrawHandle, grid: &Grid, screen_width: i32, screen_height: i32) 
+    {
         let cell_width =
             screen_width as f32 / grid.width() as f32;
 
@@ -109,26 +97,14 @@ impl Framebuffer {
             let screen_x =
                 (x as f32 * cell_width).round() as i32;
 
-            renderer.draw_line(
-                screen_x,
-                0,
-                screen_x,
-                screen_height,
-                self.grid_color,
-            );
+            renderer.draw_line( screen_x, 0, screen_x, screen_height, self.grid_color);
         }
 
         for y in 0..=grid.height() {
             let screen_y =
                 (y as f32 * cell_height).round() as i32;
 
-            renderer.draw_line(
-                0,
-                screen_y,
-                screen_width,
-                screen_y,
-                self.grid_color,
-            );
+            renderer.draw_line( 0, screen_y, screen_width, screen_y, self.grid_color);
         }
     }
 }

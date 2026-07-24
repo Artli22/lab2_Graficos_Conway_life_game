@@ -1,3 +1,4 @@
+
 pub const BLOCK: [&str; 2] = [
     "OO",
     "OO",
@@ -20,11 +21,35 @@ pub const TOAD: [&str; 2] = [
     "OOO.",
 ];
 
+pub const PULSAR: [&str; 13] = [
+    "..OOO...OOO..",
+    ".............",
+    "O....O.O....O",
+    "O....O.O....O",
+    "O....O.O....O",
+    "..OOO...OOO..",
+    ".............",
+    "..OOO...OOO..",
+    "O....O.O....O",
+    "O....O.O....O",
+    "O....O.O....O",
+    ".............",
+    "..OOO...OOO..",
+];
+
 pub const GLIDER: [&str; 3] = [
     ".O.",
     "..O",
     "OOO",
 ];
+
+pub const LWSS: [&str; 4] = [
+    "O..O.",
+    "....O",
+    "O...O",
+    ".OOOO",
+];
+
 pub const EASTER_EGG : [&str; 16] = [
     ".....OOOOO......",
     "....OOOOOOOOO...",

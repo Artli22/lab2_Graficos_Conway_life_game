@@ -1,3 +1,4 @@
+
 mod framebuffer;
 mod grid;
 mod patrones;
@@ -11,6 +12,8 @@ use patrones::{
     BLOCK,
     GLIDER,
     TOAD,
+    PULSAR,
+    LWSS,
     EASTER_EGG,
 };
 
@@ -38,17 +41,85 @@ fn main() {
 
     let mut framebuffer = Framebuffer::new();
 
-    framebuffer.set_background_color(Color::BLACK);
-    framebuffer.set_dead_color(Color::BLACK);
-    framebuffer.set_alive_color(Color::WHITE);
+    framebuffer.set_background_color(Color::new(18, 34, 60, 255));
+    framebuffer.set_dead_color(Color::new(18, 34, 60, 255));
+    framebuffer.set_alive_color(Color::new(220, 245, 255, 255));
+    framebuffer.set_grid_color(Color::new(60, 90, 120, 255));
     framebuffer.set_grid_visible(true);
 
-    grid.place_pattern(&BLOCK, 10, 10);
-    grid.place_pattern(&BEEHIVE, 25, 10);
-    grid.place_pattern(&BLINKER, 10, 30);
-    grid.place_pattern(&TOAD, 25, 30);
-    grid.place_pattern(&GLIDER, 50, 50);
-    grid.place_pattern(&EASTER_EGG, 70, 70);
+    let posiciones_block = [
+    (10, 10),
+    (20, 20),
+    (35, 40),
+    ];
+    for (x, y) in posiciones_block {
+    grid.place_pattern(&BLOCK, x, y);
+    }
+
+    let posiciones_beehive = [
+    (10, 50),
+    (50, 10),
+    (50, 60),
+    ];
+    for (x, y) in posiciones_beehive {
+        grid.place_pattern(&BEEHIVE, x, y);
+    }
+
+    let posiciones_pulsar = [
+    (30, 30),
+    (60, 60),
+    (30, 60),
+    (60, 30),
+    ];
+    for (x, y) in posiciones_pulsar {
+        grid.place_pattern(&PULSAR, x, y);
+    }
+
+    let posiciones_lwss = [
+    (10, 70),
+    (40, 10),
+    (70, 40),
+    ];
+    for (x, y) in posiciones_lwss {
+        grid.place_pattern(&LWSS, x, y);
+    }
+
+    let posiciones_glider = [
+    (10, 30),
+    (30, 10),
+    (50, 50),
+    ];
+    for (x, y) in posiciones_glider {
+        grid.place_pattern(&GLIDER, x, y);
+    }
+
+    let posiciones_toad = [
+    (25, 30),
+    (45, 10),
+    (65, 50),
+    ];
+    for (x, y) in posiciones_toad {
+        grid.place_pattern(&TOAD, x, y);
+    }
+
+    let posiciones_EASTER_EGG = [
+    (70, 70),
+    (50, 70),
+    (70, 30),
+    ];
+
+    for (x, y) in posiciones_EASTER_EGG {
+        grid.place_pattern(&EASTER_EGG, x, y);
+    }
+
+    let posiciones_blinker = [
+    (10, 90),
+    (30, 70),
+    (50, 90),
+    ];
+    for (x, y) in posiciones_blinker {
+        grid.place_pattern(&BLINKER, x, y);
+    }
 
     let mut elapsed_time = 0.0;
     while !window.window_should_close() {
@@ -65,11 +136,6 @@ fn main() {
         let mut renderer =
             window.begin_drawing(&raylib_thread);
 
-        framebuffer.render(
-            &mut renderer,
-            &grid,
-            screen_width,
-            screen_height,
-        );
+        framebuffer.render( &mut renderer, &grid, screen_width, screen_height);
     }
 }
