@@ -18,9 +18,9 @@ use raylib::prelude::*;
 
 const GRID_WIDTH: usize = 100;
 const GRID_HEIGHT: usize = 100;
-
 const WINDOW_WIDTH: i32 = 800;
 const WINDOW_HEIGHT: i32 = 800;
+const INTERVAL: f32 = 0.6;
 
 fn main() {
     let (mut window, raylib_thread) = raylib::init()
@@ -43,24 +43,25 @@ fn main() {
     framebuffer.set_alive_color(Color::WHITE);
     framebuffer.set_grid_visible(true);
 
-    // Vida estacionaria
     grid.place_pattern(&BLOCK, 10, 10);
     grid.place_pattern(&BEEHIVE, 25, 10);
-
-    // Osciladores
     grid.place_pattern(&BLINKER, 10, 30);
     grid.place_pattern(&TOAD, 25, 30);
-
-    // Planeador
     grid.place_pattern(&GLIDER, 50, 50);
-
-    // Easter egg
     grid.place_pattern(&EASTER_EGG, 70, 70);
 
+    let mut elapsed_time = 0.0;
     while !window.window_should_close() {
+        let frame_time = window.get_frame_time();
+        elapsed_time += frame_time;
+
+        if elapsed_time >= INTERVAL {
+            grid.next_generation();
+            elapsed_time = 0.0;
+        }
+
         let screen_width = window.get_screen_width().max(1);
         let screen_height = window.get_screen_height().max(1);
-
         let mut renderer =
             window.begin_drawing(&raylib_thread);
 

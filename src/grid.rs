@@ -69,4 +69,54 @@ impl Grid {
             }
         }
     } 
+
+    pub fn next_generation(&mut self) {
+    let mut next_cells = vec![false; self.width * self.height];
+
+    for y in 0..self.height {
+        for x in 0..self.width {
+            let neighbors = self.count_alive_neighbors(x, y);
+            let currently_alive = self.is_alive(x, y);
+
+            let will_be_alive = match (currently_alive, neighbors) {
+                (true, 2) | (true, 3) => true,
+                (false, 3) => true,
+                _ => false,
+            };
+
+            let index = self.index(x, y);
+            next_cells[index] = will_be_alive;
+        }
+    }
+
+    self.cells = next_cells;
+    }
+
+    fn count_alive_neighbors(&self, x: usize, y: usize) -> usize {
+    let mut count = 0;
+
+    for dy in -1..=1 {
+        for dx in -1..=1 {
+
+            if dx == 0 && dy == 0 {
+                continue;
+            }
+
+            let nx = x as isize + dx;
+            let ny = y as isize + dy;
+
+            if nx >= 0
+                && nx < self.width as isize
+                && ny >= 0
+                && ny < self.height as isize
+            {
+                if self.is_alive(nx as usize, ny as usize) {
+                    count += 1;
+                }
+            }
+        }
+    }
+
+        count
+    }
 }
